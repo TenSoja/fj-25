@@ -1,0 +1,10 @@
+package br.com.caelum.financas.modelo;
+
+public class Conta {
+	private Integer id;
+	
+	private String titular;
+	private String banco;
+	private String agencia;
+	private String numero;
+}
