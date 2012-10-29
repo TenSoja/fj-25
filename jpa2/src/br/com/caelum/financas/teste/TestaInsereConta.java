@@ -4,6 +4,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import br.com.caelum.financas.dao.ContaDAO;
+import br.com.caelum.financas.dao.DAO;
 import br.com.caelum.financas.infra.JPAUtil;
 import br.com.caelum.financas.modelo.Conta;
 
@@ -18,18 +20,21 @@ public class TestaInsereConta {
 		 * EntityManager entityManager = factory.createEntityManager();
 		 */
 		
-		EntityManager entityManager = new JPAUtil().getEntityManager();
+		EntityManager em = new JPAUtil().getEntityManager();
+		ContaDAO dao = new ContaDAO(em);
 
 		Conta conta = new Conta();
 		conta.setTitular("José Roberto");
 		conta.setBanco("Banco do Brasil");
 		conta.setNumero("123456-6");
 		conta.setAgencia("0999");
-
-		entityManager.getTransaction().begin();
-		entityManager.persist(conta);
-		entityManager.getTransaction().commit();
-		entityManager.close();
+		
+	
+		em.getTransaction().begin();
+		//entityManager.persist(conta);
+		dao.adiciona(conta);
+		em.getTransaction().commit();
+		em.close();
 
 		System.out.println("Conta gravada com sucesso!");
 		long fim = System.currentTimeMillis();
