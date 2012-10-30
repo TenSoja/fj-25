@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"      
+      xmlns:h="http://java.sun.com/jsf/html">
+    <f:view contentType="text/html" />
+    <h:head>
+        <title>Sistema de Finanças</title>
+    </h:head>
+    <h:body>
+    <h:form>
+    <h:panelGrid columns="1">
+        <h:outputText value="Página do sistema de finanças" />
+        <h:commandLink action="#{menuBean.contas}" value="Cadastro de contas"/>
+        <h:commandLink action="#{menuBean.movimentacoes}" value="Cadastro de movimentações"/>
+        <h:commandLink action="#{menuBean.estatisticas}" value="Estatisticas"/>
+        <h:commandLink action="#{menuBean.mesesComMovimentacao}" value="Lista de movimentações por gasto por mês"/>
+        <h:commandLink action="#{menuBean.movimentacoesDaConta}" value="Pesquisa de movimentações por conta"/>
+        <h:commandLink action="#{menuBean.movimentacoesPorTags}" value="Pesquisa de movimentações por tags"/>
+        <h:commandLink action="#{menuBean.movimentacoesPorTagsAvancado}" value="Pesquisa de movimentações por tags (avançado)"/>
+        <h:commandLink action="#{menuBean.movimentacoesPorTitular}" value="Pesquisa de movimentações por titular"/>
+        <h:commandLink action="#{menuBean.movimentacoesPorValorETipo}" value="Pesquisa de movimentações por valor e tipo"/>
+        <h:commandLink action="#{menuBean.pesquisaMovimentacoes}" value="Filtro dinâmico de movimentações"/>
+        <h:commandLink action="#{menuBean.qtdeMovimentacoesDaConta}" value="Quantidade de movimentações por conta"/>
+        <h:commandLink action="#{menuBean.totalMovimentado}" value="Total movimentado por conta"/>
+    </h:panelGrid>
+	</h:form>        
+    </h:body>
+</html>

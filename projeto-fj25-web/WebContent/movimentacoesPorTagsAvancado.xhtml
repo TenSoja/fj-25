@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:p="http://primefaces.prime.com.tr/ui"     
+      xmlns:h="http://java.sun.com/jsf/html">
+    <f:view contentType="text/html" />
+    <h:head>
+        <title>Sistema de Finanças</title>
+    </h:head>
+    <h:body>
+		<h2><h:outputText value="Movimentacoes" /></h2>
+		   <hr />
+		   <h:form>
+		    <h:panelGrid columns="2">
+			    <h:panelGrid columns="2">
+			    	<h:outputText value="Tags"/>
+		        	<h:inputText value="#{buscaTextualDSLBean.elemento.texto}"/>
+		        	
+			    	<h:outputText value="Grau de semelhança"/>
+					<h:selectOneMenu value="#{buscaTextualDSLBean.elemento.semelhanca}">
+						<f:selectItem itemLabel="Escolha" itemValue="" noSelectionOption="true"/>
+			    		<f:selectItems value="#{buscaTextualDSLBean.grausDeSemelhanca}" />
+			    	</h:selectOneMenu>
+					
+			    	<h:outputText value="Multiplicador da relevância: "/>
+		        	<h:inputText value="#{buscaTextualDSLBean.elemento.multiplicador}"/>
+					
+			    	<h:outputText value="Presença"/>
+					<h:selectOneMenu value="#{buscaTextualDSLBean.elemento.presenca}">
+						<f:selectItem itemLabel="Escolha" itemValue="" noSelectionOption="true"/>
+			    		<f:selectItems value="#{buscaTextualDSLBean.tiposDePresenca}" />
+			    	</h:selectOneMenu>
+			    	
+			    	<br/>
+			    	
+			    	<h:commandButton value="Adicionar na busca" action="#{buscaTextualDSLBean.adicionaNaBusca}" rendered="false"/>
+			    	
+			    	<h:commandButton value="Pesquisar" action="#{buscaTextualDSLBean.buscaUsandoDSL}"/>
+			    </h:panelGrid>
+			    
+			    <h:panelGrid columns="1" rendered="false">
+			    	<h:outputText value="Busca: #{buscaTextualDSLBean.query}"/>
+				    <h:dataTable value="#{elementosEscolhidosBean.elementos}" var="elemento">
+			        	<h:column>
+			        		#{elemento}
+			        	</h:column>
+			        </h:dataTable>
+			        
+				    <h:panelGrid columns="2">
+				    	<h:commandButton value="Desfazer ultimo" action="#{buscaTextualDSLBean.desfazUltima}"/>
+				    	<h:commandButton value="Limpar busca" action="#{buscaTextualDSLBean.limpaBusca}"/>
+						
+						<br/>				    	
+			    		<h:commandButton value="Pesquisar" action="#{buscaTextualDSLBean.buscaUsandoDSL}"/>
+				    </h:panelGrid>
+			    </h:panelGrid>
+			</h:panelGrid>
+		</h:form>
+			
+        <hr />
+        <h:dataTable value="#{buscaTextualDSLBean.movimentacoes}" var="movimentacao">
+        	<h:column>
+        		<f:facet name="header">
+        			<h:outputText value="ID" />
+        		</f:facet>
+        		#{movimentacao.id}
+        	</h:column>
+        	<h:column>
+        		<f:facet name="header">
+        			<h:outputText value="Conta" />
+        		</f:facet>
+        		#{movimentacao.conta.titular} - #{movimentacao.conta.banco}
+        	</h:column>
+        	<h:column>
+				<f:facet name="header">
+					<h:outputText value="Valor" />
+				</f:facet>
+				<h:outputText value="#{movimentacao.valor}" >
+					<f:convertNumber pattern="R$ #0.00"/>
+				</h:outputText>
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Data" />
+				</f:facet>
+				<h:outputText value="#{movimentacao.data.time}" >
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</h:column>
+        	<h:column>
+        		<f:facet name="header">
+        			<h:outputText value="Tipo" />
+        		</f:facet>
+        		#{movimentacao.tipoMovimentacao}
+        	</h:column>
+        	<h:column>
+        		<f:facet name="header">
+        			<h:outputText value="Tags" />
+        		</f:facet>
+        		#{movimentacao.tags}
+        	</h:column>        	
+        </h:dataTable>  
+    </h:body>
+</html>
