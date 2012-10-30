@@ -4,9 +4,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.persistence.EntityManager;
 
+import br.com.caelum.financas.dao.ContaDAO;
+import br.com.caelum.financas.dao.MovimentacaoDAO;
+import br.com.caelum.financas.infra.JPAUtil;
+import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 
@@ -25,17 +28,52 @@ public class MovimentacoesBean {
 //	}
 	
 	public void grava() {
+		EntityManager em = new  JPAUtil().getEntityManager();
+		em.getTransaction().begin();
+		
+		MovimentacaoDAO movimentacaoDao = new MovimentacaoDAO(em);
+		ContaDAO contaDao = new ContaDAO(em);
+		
+	
+		Conta contaRelacionada = contaDao.busca(contaId);
+		movimentacao.setConta(contaRelacionada);
+		
+		movimentacaoDao.adiciona(movimentacao);
+		
+		this.movimentacoes = movimentacaoDao.lista();
+		em.getTransaction().commit();
+		em.close();
+		
 		System.out.println("Fazendo a gravacao da movimentacao");
 		limpaFormularioDoJSF();
 	}
 	
 
 	public void remove() {
+		EntityManager em = new  JPAUtil().getEntityManager();
+		em.getTransaction().begin();
+		
+		MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(em);
+		Movimentacao movimentacaoParaRemover = movimentacaoDAO.busca(this.movimentacao.getId());
+		
+		movimentacaoDAO.remove(movimentacaoParaRemover);
+		movimentacoes = movimentacaoDAO.lista();
+		
+		em.getTransaction().commit();
+		em.close();
+		
 		System.out.println("Removendo a movimentacao");
 		limpaFormularioDoJSF();
 	}
 
 	public List<Movimentacao> getMovimentacoes() {
+		if(movimentacoes == null){
+			EntityManager em = new  JPAUtil().getEntityManager();
+			MovimentacaoDAO movimentacaoDAO = new MovimentacaoDAO(em);
+			movimentacoes = movimentacaoDAO.lista();
+			em.close();
+			
+		}
 		System.out.println("Listando as movimentacoes");
 		return movimentacoes;
 	}

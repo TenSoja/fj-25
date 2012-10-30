@@ -6,6 +6,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.persistence.EntityManager;
 
+import br.com.caelum.financas.dao.MovimentacaoDAO;
+import br.com.caelum.financas.infra.JPAUtil;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 
@@ -23,6 +25,10 @@ public class TotalMovimentadoBean {
 	
 
 	public void calcula() {
+		EntityManager em = new JPAUtil().getEntityManager();
+		MovimentacaoDAO movimentacaoDao = new MovimentacaoDAO(em);
+		
+		this.total = movimentacaoDao.calculaTotalMovimento(conta, tipoMovimentacao);
 		System.out.println("Total movimentado pela conta");
 	}
 

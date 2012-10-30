@@ -29,6 +29,9 @@ public class ContaDAO {
 	public void remove(Conta t) {
 		dao.remove(t);
 	}
+	public void altera(Conta t){
+		dao.altera(t);
+	}
 
 	
 	

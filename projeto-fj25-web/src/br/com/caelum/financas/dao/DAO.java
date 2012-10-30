@@ -26,6 +26,9 @@ public class DAO<T> {
 	public T busca(Integer id) {
 		return this.em.find(classe,id);
 	}
+	public void altera(T t){
+		this.em.merge(t);
+	}
 	
 	public List<T> lista(){
 		return this.em.createQuery("from "+classe.getName()).getResultList();

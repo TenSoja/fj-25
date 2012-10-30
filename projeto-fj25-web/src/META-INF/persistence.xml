@@ -9,7 +9,7 @@
 		<class>br.com.caelum.financas.modelo.Movimentacao</class>
 		
 		<properties>
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 			<!-- poderia ser: create,create-drop -->
 			<property name="hibernate.hbm2ddl.auto" value="update"/>
 			<property name="hibernate.show_sql" value="true"/>

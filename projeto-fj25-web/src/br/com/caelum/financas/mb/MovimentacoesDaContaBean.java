@@ -6,6 +6,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.persistence.EntityManager;
 
+import br.com.caelum.financas.dao.MovimentacaoDAO;
+import br.com.caelum.financas.infra.JPAUtil;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 
@@ -21,6 +23,15 @@ public class MovimentacoesDaContaBean {
 	}
 
 	public void lista() {
+		EntityManager em = new JPAUtil().getEntityManager();
+		MovimentacaoDAO movimentacaoDao = new MovimentacaoDAO(em);
+		
+		this.movimentacoes = movimentacaoDao.listaTodasMovimentacoes(conta);
+		
+		
+		//this.movimentacoes = movimentacaoDao.lista();
+		
+		
 		System.out.println("Listando as movimentacoes da conta");
 	}
 
