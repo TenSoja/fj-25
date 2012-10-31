@@ -7,6 +7,7 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.com.caelum.financas.modelo.Conta</class>
 		<class>br.com.caelum.financas.modelo.Movimentacao</class>
+		<class>br.com.caelum.financas.modelo.Tag</class>
 		
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>

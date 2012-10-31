@@ -1,6 +1,7 @@
 package br.com.caelum.financas.mb;
 
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -8,9 +9,11 @@ import javax.persistence.EntityManager;
 
 import br.com.caelum.financas.dao.ContaDAO;
 import br.com.caelum.financas.dao.MovimentacaoDAO;
+import br.com.caelum.financas.dao.TagDAO;
 import br.com.caelum.financas.infra.JPAUtil;
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
+import br.com.caelum.financas.modelo.Tag;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 
 
@@ -37,7 +40,7 @@ public class MovimentacoesBean {
 	
 		Conta contaRelacionada = contaDao.busca(contaId);
 		movimentacao.setConta(contaRelacionada);
-		
+		gravaEAssociaAsTags(em);
 		movimentacaoDao.adiciona(movimentacao);
 		
 		this.movimentacoes = movimentacaoDao.lista();
@@ -117,5 +120,16 @@ public class MovimentacoesBean {
 
 	public TipoMovimentacao[] getTiposDeMovimentacao() {
 		return TipoMovimentacao.values();
+	}
+	
+	private void gravaEAssociaAsTags(EntityManager em){
+		String[] nomesDasTags = this.tags.split(" ");
+		TagDAO tagDAO = new TagDAO(em);
+		for (String nome : nomesDasTags) {
+			Tag tag = tagDAO.adicionaOuBuscaTagComNome(nome);
+			movimentacao.getTags().add(tag);
+			
+		}
+		
 	}
 }
